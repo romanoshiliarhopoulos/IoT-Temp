@@ -33,7 +33,7 @@ FirebaseAuth auth;      //used for authentication
 FirebaseConfig config;  //used for configuration
 
 unsigned long sendDataPrevMillis = 0;  //to read and write on the firebase database in a specified interval
-bool signupOK = false;
+bool signupOK = true;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -67,12 +67,14 @@ void setup() {
   config.token_status_callback = tokenStatusCallback;
   */
   Firebase.begin(&config, &auth);
+  Serial.print("Firebase Begin...");
   Firebase.reconnectWiFi(true);
 
   Serial.println("Inital setup");
 }
 
 void loop() {
+
   Serial.println("Entered loop...");
   //If the wifi looses connection, try to reconnect...
   // Ensure Wi-Fi connection is active
