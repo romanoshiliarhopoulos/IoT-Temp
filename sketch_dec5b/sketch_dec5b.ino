@@ -7,9 +7,12 @@
 DHT dht(26, DHT22);
 WebServer server(80);
 
+
 const char* ssid = "eduroam";
 const char* identity = "dxj6719@northwestern.edu";
 const char* password = "RomanoHili7264!";
+
+
 
 float readDHTTemperature() {
   float t = dht.readTemperature();
@@ -89,6 +92,7 @@ void setup() {
     Serial.println(WiFi.localIP());
 
     dht.begin();
+
     delay(3000);
     
     if (MDNS.begin("esp32")) {
