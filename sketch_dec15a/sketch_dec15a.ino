@@ -170,17 +170,5 @@ void loop() {
     }
 
   }
-  // put your main code here, to run repeatedl
-  /*
-  float temp = dht.readTemperature();
-  float humidity = dht.readHumidity();
-  Serial.print("Temp: ");
-  Serial.print(temp); Serial.print("C");
-
-  Serial.print("Humidity ");
-  Serial.print(humidity);
-  Serial.println(" % ");
-  */
-
   delay(2000);
 }
