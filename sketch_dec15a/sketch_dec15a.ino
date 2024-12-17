@@ -2,6 +2,7 @@
 #include <WiFi.h>
 #include <time.h>
 #include <dummy.h>
+#include <unordered_map>
 
 //things to include for the firebase app
 #include <Firebase_ESP_Client.h>
@@ -17,22 +18,33 @@ const char* password = "36bbhhekxdanxpc3";
 //define API Key for database in Firebase
 const char* API_KEY = "AIzaSyBtE__1HiSrImr4dnFx4wWFjOzGnez-SIM";
 const char* DATABASE_URL = "https://iot-app-20b70-default-rtdb.firebaseio.com/";
+// For Firestore
+#define PROJECT_ID "iot-app-20b70"
+
 const int hour = 3600;
 //For the time keeping
 const char* ntpServer = "pool.ntp.org";
-const long gmtOffset_sec = 2*hour;         // Offset in seconds for GMT
+const long gmtOffset_sec = 2 * hour;  // Offset in seconds for GMT
 const int daylightOffset_sec = 3600;  // Adjust for daylight saving time (if needed)
 
 float temp = 0;      //variable to store temp data
 float humidity = 0;  //variable to store humidity data.
 
+//to compute averages for the firestore database.
+float total_temp = 0;
+float total_hum = 0;
+float numReadings = 0;
+
+const long sendInterval = 600000;  // 10 minute interval
 
 //Define objects for database
-FirebaseData data;      //used for data
+FirebaseData data;      //used for real-time database
+FirebaseData fbdo_fs;   // For Firestore database
 FirebaseAuth auth;      //used for authentication
 FirebaseConfig config;  //used for configuration
 
 unsigned long sendDataPrevMillis = 0;  //to read and write on the firebase database in a specified interval
+unsigned long sendFirestorePrevMillis = 0;
 bool signupOK = true;
 
 void setup() {
@@ -75,6 +87,7 @@ void setup() {
   config.api_key = API_KEY;
   config.database_url = DATABASE_URL;
 
+
   if (Firebase.signUp(&config, &auth, "", "")) {
     Serial.println("signUp OK");
     signupOK = true;
@@ -105,7 +118,6 @@ void setup() {
 
 void loop() {
 
-  Serial.println("Entered loop...");
   //If the wifi looses connection, try to reconnect...
   // Ensure Wi-Fi connection is active
   if (WiFi.status() != WL_CONNECTED) {
@@ -134,6 +146,7 @@ void loop() {
   Serial.print(Firebase.ready());
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
+
 
     //...............................storing the sensor data..................
     //assign the latest reading to the temp variable
@@ -169,6 +182,48 @@ void loop() {
       Serial.printf("Error sending timestamp: %s\n", data.errorReason().c_str());
     }
 
+    total_temp = total_temp + temp;
+    total_hum = total_hum + humidity;
+    numReadings++;
+
+    if (millis() - sendFirestorePrevMillis > sendInterval) {  //once every ten minutes
+      sendFirestorePrevMillis = millis();
+      Serial.println("Updating the Firestore Database...");
+
+      //for the average readings
+      float avg_temp = total_temp / numReadings;
+      float avg_hum = total_hum / numReadings;
+
+      //re-set the total readings to zero for the next interval
+      total_temp = 0;
+      total_hum = 0;
+      numReadings = 0;
+
+      // For Firestore timestamp
+      char firestoreTimestamp[30];
+      strftime(firestoreTimestamp, sizeof(firestoreTimestamp), "%Y-%m-%dT%H:%M:%SZ", &timeinfo);
+
+      //writing to the firestore database
+      FirebaseJson content;
+      content.set("fields/temperature/doubleValue", String(avg_temp));
+      content.set("fields/humidity/doubleValue", String(avg_hum));
+      content.set("fields/timestamp/timestampValue", String(firestoreTimestamp));
+
+      // Get total seconds since midnight
+      int totalSeconds = timeinfo.tm_hour * 3600 + timeinfo.tm_min * 60 + timeinfo.tm_sec;
+      char timeStr[15];
+      strftime(timeStr, sizeof(timeStr), "%Y%m%d", &timeinfo);
+      String documentPath = "readings/" + String(timeStr) + String(totalSeconds);
+      Serial.println(documentPath);
+      //saves in the following format: YYYYMMDDSSSSS where SSSS is the number of seconds since midnight of that day.
+      // this allows for the next input to be algebraically greater than the previous
+      if (Firebase.Firestore.createDocument(&fbdo_fs, PROJECT_ID, "", documentPath.c_str(), content.raw())) {
+        Serial.println("Firestore write successful");
+      } else {
+        Serial.println("Firestore write failed");
+        Serial.println(fbdo_fs.errorReason());
+      }
+    }
   }
   delay(2000);
 }
