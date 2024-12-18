@@ -6,41 +6,67 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A859AFA12D125CA300E0ECAC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A859AFA02D125CA300E0ECAC /* FirebaseAnalytics */; };
+		A859AFA32D125CA300E0ECAC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A859AFA22D125CA300E0ECAC /* FirebaseAnalyticsWithoutAdIdSupport */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		A8DEE1FD2D1240AA003FFFCE /* PBXContainerItemProxy */ = {
+		A859AF7D2D125C4B00E0ECAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A8DEE1E42D1240A6003FFFCE /* Project object */;
+			containerPortal = A859AF642D125C4500E0ECAC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A8DEE1EB2D1240A6003FFFCE;
+			remoteGlobalIDString = A859AF6B2D125C4500E0ECAC;
 			remoteInfo = Tempy;
 		};
-		A8DEE2072D1240AA003FFFCE /* PBXContainerItemProxy */ = {
+		A859AF872D125C4B00E0ECAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A8DEE1E42D1240A6003FFFCE /* Project object */;
+			containerPortal = A859AF642D125C4500E0ECAC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A8DEE1EB2D1240A6003FFFCE;
+			remoteGlobalIDString = A859AF6B2D125C4500E0ECAC;
 			remoteInfo = Tempy;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A8DEE1EC2D1240A6003FFFCE /* Tempy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tempy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8DEE1FC2D1240AA003FFFCE /* TempyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TempyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8DEE2062D1240AA003FFFCE /* TempyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TempyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A859AF6C2D125C4500E0ECAC /* Tempy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tempy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A859AF7C2D125C4B00E0ECAC /* TempyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TempyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A859AF862D125C4B00E0ECAC /* TempyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TempyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A859AF9D2D125C6200E0ECAC /* Exceptions for "Tempy" folder in "TempyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = A859AF7B2D125C4B00E0ECAC /* TempyTests */;
+		};
+		A859AF9E2D125C6200E0ECAC /* Exceptions for "Tempy" folder in "TempyUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = A859AF852D125C4B00E0ECAC /* TempyUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A8DEE1EE2D1240A6003FFFCE /* Tempy */ = {
+		A859AF6E2D125C4500E0ECAC /* Tempy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A859AF9D2D125C6200E0ECAC /* Exceptions for "Tempy" folder in "TempyTests" target */,
+				A859AF9E2D125C6200E0ECAC /* Exceptions for "Tempy" folder in "TempyUITests" target */,
+			);
 			path = Tempy;
 			sourceTree = "<group>";
 		};
-		A8DEE1FF2D1240AA003FFFCE /* TempyTests */ = {
+		A859AF7F2D125C4B00E0ECAC /* TempyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TempyTests;
 			sourceTree = "<group>";
 		};
-		A8DEE2092D1240AA003FFFCE /* TempyUITests */ = {
+		A859AF892D125C4B00E0ECAC /* TempyUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TempyUITests;
 			sourceTree = "<group>";
@@ -48,21 +74,23 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A8DEE1E92D1240A6003FFFCE /* Frameworks */ = {
+		A859AF692D125C4500E0ECAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A859AFA12D125CA300E0ECAC /* FirebaseAnalytics in Frameworks */,
+				A859AFA32D125CA300E0ECAC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A859AF792D125C4B00E0ECAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8DEE1F92D1240AA003FFFCE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A8DEE2032D1240AA003FFFCE /* Frameworks */ = {
+		A859AF832D125C4B00E0ECAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,22 +100,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A8DEE1E32D1240A6003FFFCE = {
+		A859AF632D125C4500E0ECAC = {
 			isa = PBXGroup;
 			children = (
-				A8DEE1EE2D1240A6003FFFCE /* Tempy */,
-				A8DEE1FF2D1240AA003FFFCE /* TempyTests */,
-				A8DEE2092D1240AA003FFFCE /* TempyUITests */,
-				A8DEE1ED2D1240A6003FFFCE /* Products */,
+				A859AF6E2D125C4500E0ECAC /* Tempy */,
+				A859AF7F2D125C4B00E0ECAC /* TempyTests */,
+				A859AF892D125C4B00E0ECAC /* TempyUITests */,
+				A859AF6D2D125C4500E0ECAC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A8DEE1ED2D1240A6003FFFCE /* Products */ = {
+		A859AF6D2D125C4500E0ECAC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A8DEE1EC2D1240A6003FFFCE /* Tempy.app */,
-				A8DEE1FC2D1240AA003FFFCE /* TempyTests.xctest */,
-				A8DEE2062D1240AA003FFFCE /* TempyUITests.xctest */,
+				A859AF6C2D125C4500E0ECAC /* Tempy.app */,
+				A859AF7C2D125C4B00E0ECAC /* TempyTests.xctest */,
+				A859AF862D125C4B00E0ECAC /* TempyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,134 +123,139 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A8DEE1EB2D1240A6003FFFCE /* Tempy */ = {
+		A859AF6B2D125C4500E0ECAC /* Tempy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A8DEE2102D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "Tempy" */;
+			buildConfigurationList = A859AF902D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "Tempy" */;
 			buildPhases = (
-				A8DEE1E82D1240A6003FFFCE /* Sources */,
-				A8DEE1E92D1240A6003FFFCE /* Frameworks */,
-				A8DEE1EA2D1240A6003FFFCE /* Resources */,
+				A859AF682D125C4500E0ECAC /* Sources */,
+				A859AF692D125C4500E0ECAC /* Frameworks */,
+				A859AF6A2D125C4500E0ECAC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A8DEE1EE2D1240A6003FFFCE /* Tempy */,
+				A859AF6E2D125C4500E0ECAC /* Tempy */,
 			);
 			name = Tempy;
 			packageProductDependencies = (
+				A859AFA02D125CA300E0ECAC /* FirebaseAnalytics */,
+				A859AFA22D125CA300E0ECAC /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = Tempy;
-			productReference = A8DEE1EC2D1240A6003FFFCE /* Tempy.app */;
+			productReference = A859AF6C2D125C4500E0ECAC /* Tempy.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A8DEE1FB2D1240AA003FFFCE /* TempyTests */ = {
+		A859AF7B2D125C4B00E0ECAC /* TempyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A8DEE2132D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "TempyTests" */;
+			buildConfigurationList = A859AF932D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "TempyTests" */;
 			buildPhases = (
-				A8DEE1F82D1240AA003FFFCE /* Sources */,
-				A8DEE1F92D1240AA003FFFCE /* Frameworks */,
-				A8DEE1FA2D1240AA003FFFCE /* Resources */,
+				A859AF782D125C4B00E0ECAC /* Sources */,
+				A859AF792D125C4B00E0ECAC /* Frameworks */,
+				A859AF7A2D125C4B00E0ECAC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A8DEE1FE2D1240AA003FFFCE /* PBXTargetDependency */,
+				A859AF7E2D125C4B00E0ECAC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A8DEE1FF2D1240AA003FFFCE /* TempyTests */,
+				A859AF7F2D125C4B00E0ECAC /* TempyTests */,
 			);
 			name = TempyTests;
 			packageProductDependencies = (
 			);
 			productName = TempyTests;
-			productReference = A8DEE1FC2D1240AA003FFFCE /* TempyTests.xctest */;
+			productReference = A859AF7C2D125C4B00E0ECAC /* TempyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A8DEE2052D1240AA003FFFCE /* TempyUITests */ = {
+		A859AF852D125C4B00E0ECAC /* TempyUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A8DEE2162D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "TempyUITests" */;
+			buildConfigurationList = A859AF962D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "TempyUITests" */;
 			buildPhases = (
-				A8DEE2022D1240AA003FFFCE /* Sources */,
-				A8DEE2032D1240AA003FFFCE /* Frameworks */,
-				A8DEE2042D1240AA003FFFCE /* Resources */,
+				A859AF822D125C4B00E0ECAC /* Sources */,
+				A859AF832D125C4B00E0ECAC /* Frameworks */,
+				A859AF842D125C4B00E0ECAC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A8DEE2082D1240AA003FFFCE /* PBXTargetDependency */,
+				A859AF882D125C4B00E0ECAC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A8DEE2092D1240AA003FFFCE /* TempyUITests */,
+				A859AF892D125C4B00E0ECAC /* TempyUITests */,
 			);
 			name = TempyUITests;
 			packageProductDependencies = (
 			);
 			productName = TempyUITests;
-			productReference = A8DEE2062D1240AA003FFFCE /* TempyUITests.xctest */;
+			productReference = A859AF862D125C4B00E0ECAC /* TempyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A8DEE1E42D1240A6003FFFCE /* Project object */ = {
+		A859AF642D125C4500E0ECAC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					A8DEE1EB2D1240A6003FFFCE = {
+					A859AF6B2D125C4500E0ECAC = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					A8DEE1FB2D1240AA003FFFCE = {
+					A859AF7B2D125C4B00E0ECAC = {
 						CreatedOnToolsVersion = 16.2;
-						TestTargetID = A8DEE1EB2D1240A6003FFFCE;
+						TestTargetID = A859AF6B2D125C4500E0ECAC;
 					};
-					A8DEE2052D1240AA003FFFCE = {
+					A859AF852D125C4B00E0ECAC = {
 						CreatedOnToolsVersion = 16.2;
-						TestTargetID = A8DEE1EB2D1240A6003FFFCE;
+						TestTargetID = A859AF6B2D125C4500E0ECAC;
 					};
 				};
 			};
-			buildConfigurationList = A8DEE1E72D1240A6003FFFCE /* Build configuration list for PBXProject "Tempy" */;
+			buildConfigurationList = A859AF672D125C4500E0ECAC /* Build configuration list for PBXProject "Tempy" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = A8DEE1E32D1240A6003FFFCE;
+			mainGroup = A859AF632D125C4500E0ECAC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A859AF9F2D125CA300E0ECAC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = A8DEE1ED2D1240A6003FFFCE /* Products */;
+			productRefGroup = A859AF6D2D125C4500E0ECAC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A8DEE1EB2D1240A6003FFFCE /* Tempy */,
-				A8DEE1FB2D1240AA003FFFCE /* TempyTests */,
-				A8DEE2052D1240AA003FFFCE /* TempyUITests */,
+				A859AF6B2D125C4500E0ECAC /* Tempy */,
+				A859AF7B2D125C4B00E0ECAC /* TempyTests */,
+				A859AF852D125C4B00E0ECAC /* TempyUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A8DEE1EA2D1240A6003FFFCE /* Resources */ = {
+		A859AF6A2D125C4500E0ECAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8DEE1FA2D1240AA003FFFCE /* Resources */ = {
+		A859AF7A2D125C4B00E0ECAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8DEE2042D1240AA003FFFCE /* Resources */ = {
+		A859AF842D125C4B00E0ECAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,21 +265,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A8DEE1E82D1240A6003FFFCE /* Sources */ = {
+		A859AF682D125C4500E0ECAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8DEE1F82D1240AA003FFFCE /* Sources */ = {
+		A859AF782D125C4B00E0ECAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A8DEE2022D1240AA003FFFCE /* Sources */ = {
+		A859AF822D125C4B00E0ECAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,20 +289,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A8DEE1FE2D1240AA003FFFCE /* PBXTargetDependency */ = {
+		A859AF7E2D125C4B00E0ECAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A8DEE1EB2D1240A6003FFFCE /* Tempy */;
-			targetProxy = A8DEE1FD2D1240AA003FFFCE /* PBXContainerItemProxy */;
+			target = A859AF6B2D125C4500E0ECAC /* Tempy */;
+			targetProxy = A859AF7D2D125C4B00E0ECAC /* PBXContainerItemProxy */;
 		};
-		A8DEE2082D1240AA003FFFCE /* PBXTargetDependency */ = {
+		A859AF882D125C4B00E0ECAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A8DEE1EB2D1240A6003FFFCE /* Tempy */;
-			targetProxy = A8DEE2072D1240AA003FFFCE /* PBXContainerItemProxy */;
+			target = A859AF6B2D125C4500E0ECAC /* Tempy */;
+			targetProxy = A859AF872D125C4B00E0ECAC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		A8DEE20E2D1240AA003FFFCE /* Debug */ = {
+		A859AF8E2D125C4B00E0ECAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -332,7 +365,7 @@
 			};
 			name = Debug;
 		};
-		A8DEE20F2D1240AA003FFFCE /* Release */ = {
+		A859AF8F2D125C4B00E0ECAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -388,7 +421,7 @@
 			};
 			name = Release;
 		};
-		A8DEE2112D1240AA003FFFCE /* Debug */ = {
+		A859AF912D125C4B00E0ECAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -417,7 +450,7 @@
 			};
 			name = Debug;
 		};
-		A8DEE2122D1240AA003FFFCE /* Release */ = {
+		A859AF922D125C4B00E0ECAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -446,7 +479,7 @@
 			};
 			name = Release;
 		};
-		A8DEE2142D1240AA003FFFCE /* Debug */ = {
+		A859AF942D125C4B00E0ECAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -465,7 +498,7 @@
 			};
 			name = Debug;
 		};
-		A8DEE2152D1240AA003FFFCE /* Release */ = {
+		A859AF952D125C4B00E0ECAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -484,7 +517,7 @@
 			};
 			name = Release;
 		};
-		A8DEE2172D1240AA003FFFCE /* Debug */ = {
+		A859AF972D125C4B00E0ECAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -501,7 +534,7 @@
 			};
 			name = Debug;
 		};
-		A8DEE2182D1240AA003FFFCE /* Release */ = {
+		A859AF982D125C4B00E0ECAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -521,43 +554,67 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A8DEE1E72D1240A6003FFFCE /* Build configuration list for PBXProject "Tempy" */ = {
+		A859AF672D125C4500E0ECAC /* Build configuration list for PBXProject "Tempy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8DEE20E2D1240AA003FFFCE /* Debug */,
-				A8DEE20F2D1240AA003FFFCE /* Release */,
+				A859AF8E2D125C4B00E0ECAC /* Debug */,
+				A859AF8F2D125C4B00E0ECAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A8DEE2102D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "Tempy" */ = {
+		A859AF902D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "Tempy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8DEE2112D1240AA003FFFCE /* Debug */,
-				A8DEE2122D1240AA003FFFCE /* Release */,
+				A859AF912D125C4B00E0ECAC /* Debug */,
+				A859AF922D125C4B00E0ECAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A8DEE2132D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "TempyTests" */ = {
+		A859AF932D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "TempyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8DEE2142D1240AA003FFFCE /* Debug */,
-				A8DEE2152D1240AA003FFFCE /* Release */,
+				A859AF942D125C4B00E0ECAC /* Debug */,
+				A859AF952D125C4B00E0ECAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A8DEE2162D1240AA003FFFCE /* Build configuration list for PBXNativeTarget "TempyUITests" */ = {
+		A859AF962D125C4B00E0ECAC /* Build configuration list for PBXNativeTarget "TempyUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A8DEE2172D1240AA003FFFCE /* Debug */,
-				A8DEE2182D1240AA003FFFCE /* Release */,
+				A859AF972D125C4B00E0ECAC /* Debug */,
+				A859AF982D125C4B00E0ECAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A859AF9F2D125CA300E0ECAC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A859AFA02D125CA300E0ECAC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A859AF9F2D125CA300E0ECAC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		A859AFA22D125CA300E0ECAC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A859AF9F2D125CA300E0ECAC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = A8DEE1E42D1240A6003FFFCE /* Project object */;
+	rootObject = A859AF642D125C4500E0ECAC /* Project object */;
 }

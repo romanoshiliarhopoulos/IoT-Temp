@@ -61,7 +61,53 @@ readingsCollection.get().then((snapshot) => {
         ...doc.data()
     }));
     console.log(data);
+    console.log("data length: " + data.length);
+    let boolean = true;
+    for(let i = 0; i<data.length-1;i++){
+        //for every data entry make sure that the timestamp is more than the previous 
+        let timestamp1 = data[i].timestamp;
+        let timestamp2 = data[i+1].timestamp;
+
+    if(!(timestamp2>timestamp1)){
+        boolean = false;
+        console.log(i);
+    }else{
+        boolean = true;
+    }
+    console.log(boolean);
+    }
+    console.log("all elements");
 });
+
+// Firestore: Fetch the last n readings
+        
+        const n = 5; // Number of latest readings to fetch
+
+        // Query Firestore for the last `n` elements in descending order
+        readingsCollection
+            .orderBy("timestamp", "desc") // Order by timestamp in descending order
+            .limit(n) // Limit to the last `n` entries
+            .get()
+            .then((snapshot) => {
+                const data = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                // Log the data to the console
+                console.log(`Last ${n} readings:`);
+                console.log(data)
+                data.forEach((reading, index) => {
+                    console.log(
+                        `${index + 1}. Temperature: ${reading.temperature}, ` +
+                        `Humidity: ${reading.humidity}, ` +
+                        `Timestamp: ${reading.timestamp}`
+                    );
+                });
+            })
+            .catch((error) => {
+                console.error("Error fetching data from Firestore:", error);
+            });
 
 
     </script>

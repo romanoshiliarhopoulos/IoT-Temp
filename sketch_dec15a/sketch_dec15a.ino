@@ -200,14 +200,18 @@ void loop() {
       numReadings = 0;
 
       // For Firestore timestamp
+      // Format timestamp in ISO 8601 format with 'Z' suffix
       char firestoreTimestamp[30];
-      strftime(firestoreTimestamp, sizeof(firestoreTimestamp), "%Y-%m-%dT%H:%M:%SZ", &timeinfo);
+      time_t now = time(nullptr);
+      struct tm* ptm = gmtime(&now);
+      strftime(firestoreTimestamp, sizeof(firestoreTimestamp), "%Y-%m-%dT%H:%M:%S.000Z", ptm);
+
 
       //writing to the firestore database
       FirebaseJson content;
       content.set("fields/temperature/doubleValue", String(avg_temp));
       content.set("fields/humidity/doubleValue", String(avg_hum));
-      content.set("fields/timestamp/timestampValue", String(firestoreTimestamp));
+      content.set("fields/time/timestampValue", String(firestoreTimestamp));
 
       // Get total seconds since midnight
       int totalSeconds = timeinfo.tm_hour * 3600 + timeinfo.tm_min * 60 + timeinfo.tm_sec;
