@@ -45,6 +45,7 @@ FirebaseConfig config;  //used for configuration
 
 unsigned long sendDataPrevMillis = 0;  //to read and write on the firebase database in a specified interval
 unsigned long sendFirestorePrevMillis = 0;
+unsigned long lastReadingIndex = 0;
 bool signupOK = true;
 
 void setup() {
@@ -137,6 +138,12 @@ void loop() {
     Serial.println("Failed to obtain time");
     return;
   }
+
+  if (Firebase.RTDB.getInt(&data, "/readings/index")) {
+    lastReadingIndex = data.intData();
+    Serial.println(lastReadingIndex);
+  }
+
   // Format the timestamp
   char timestamp[30];
   strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeinfo);
@@ -146,7 +153,6 @@ void loop() {
   Serial.print(Firebase.ready());
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
-
 
     //...............................storing the sensor data..................
     //assign the latest reading to the temp variable
@@ -164,8 +170,7 @@ void loop() {
       Serial.println("FAILED: " + data.errorReason());
     }
 
-    //for saving the humidity data
-
+    //for updating the humidity data
     if (Firebase.RTDB.setFloat(&data, "/readings/humiditydata", humidity)) {
       Serial.println("Saved humidity to: " + data.dataPath());
       Serial.print("Succesfully passed humidity reading: ");
@@ -175,12 +180,14 @@ void loop() {
       Serial.println("FAILED: " + data.errorReason());
     }
 
-
+    //to update the timestamp
     if (Firebase.RTDB.setString(&data, "/readings/timestamp", timestamp)) {
       Serial.println("Timestamp sent successfully!");
     } else {
       Serial.printf("Error sending timestamp: %s\n", data.errorReason().c_str());
     }
+
+
 
     total_temp = total_temp + temp;
     total_hum = total_hum + humidity;
@@ -189,6 +196,25 @@ void loop() {
     if (millis() - sendFirestorePrevMillis > sendInterval) {  //once every ten minutes
       sendFirestorePrevMillis = millis();
       Serial.println("Updating the Firestore Database...");
+
+      //update the lastReadingIndex variable........
+      if (Firebase.RTDB.getInt(&data, "/readings/index")) {
+        lastReadingIndex = data.intData();
+        // Increment for the next reading
+        lastReadingIndex++;
+      } else {
+        Serial.println("Failed to get last index: " + data.errorReason());
+        // If failed to get index, increment from current value
+        lastReadingIndex++;
+      }
+      //update the RTDB
+
+      if (Firebase.RTDB.setInt(&data, "/readings/index", lastReadingIndex)) {
+        Serial.println("Index sent successfully!");
+      } else {
+        Serial.printf("Error sending index: %s\n", data.errorReason().c_str());
+      }
+
 
       //for the average readings
       float avg_temp = total_temp / numReadings;
@@ -217,7 +243,11 @@ void loop() {
       int totalSeconds = timeinfo.tm_hour * 3600 + timeinfo.tm_min * 60 + timeinfo.tm_sec;
       char timeStr[15];
       strftime(timeStr, sizeof(timeStr), "%Y%m%d", &timeinfo);
-      String documentPath = "readings/" + String(timeStr) + String(totalSeconds);
+
+      //fetch the previous reading Id Index:
+      //to make them arithmetically larger, we will use the lastReadingIndex.
+
+      String documentPath = "readings/" + String(lastReadingIndex);
       Serial.println(documentPath);
       //saves in the following format: YYYYMMDDSSSSS where SSSS is the number of seconds since midnight of that day.
       // this allows for the next input to be algebraically greater than the previous
