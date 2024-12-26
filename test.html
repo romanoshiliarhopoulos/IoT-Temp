@@ -94,26 +94,6 @@
                 .catch((error) => {
                     console.error("Error getting last entries: ", error);
                 });
-            
-            //returns an array of objects
-            /*
-            let data;
-            readingsCollection.get().then((snapshot) => {
-                data = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-
-                let index = data.length - n;
-                let toReturn = []; //initializes an array of length n
-
-                for (let i = index; i < data.length; i++) {
-                    toReturn.push(data[i]);
-                }
-                console.log(toReturn);
-                return toReturn;
-            });
-            */
 
         }
 
