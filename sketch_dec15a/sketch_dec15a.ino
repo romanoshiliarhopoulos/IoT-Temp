@@ -14,7 +14,7 @@ DHT dht(26, DHT22);
 
 const char* ssid = "eduroam";
 const char* identity = "dxj6719@northwestern.edu";
-const char* password = "RomanoHili7264!";
+const char* password = "!";
 
 //define API Key for database in Firebase
 const char* API_KEY = "AIzaSyBtE__1HiSrImr4dnFx4wWFjOzGnez-SIM";
