@@ -63,6 +63,17 @@ function Message() {
 
   return (
     <div>
+      <p>
+        <span style={{ fontSize: "50px", fontFamily: "Roboto, sans-serif" }}>
+          {data.temperature}°{" "}
+        </span>
+
+        <br />
+        <span style={{ color: "#7eed9a" }}>
+          ● Live ({lastUpdate.substring(0, lastUpdate.length - 3)})
+        </span>
+      </p>
+
       <table style={{ border: "1px solid black", borderCollapse: "collapse" }}>
         <thead>
           <tr>
@@ -91,10 +102,7 @@ function Message() {
           </tr>
         </tbody>
       </table>
-      <div style={{ marginTop: "10px", textAlign: "center" }}>
-        <p>Last updated: {lastUpdate}</p>
-        <p style={{ color: "green" }}>● Live monitoring active</p>
-      </div>
+      <div style={{ marginTop: "10px", textAlign: "center" }}></div>
     </div>
   );
 }
