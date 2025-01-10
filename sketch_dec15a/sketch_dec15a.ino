@@ -1,8 +1,8 @@
 #include <DHT.h>
 #include <WiFi.h>
 #include <time.h>
-#include <dummy.h>
-#include <unordered_map>
+#include "esp_wifi.h"
+#include <DHT.h>
 
 //things to include for the firebase app
 #include <Firebase_ESP_Client.h>
@@ -11,9 +11,10 @@
 
 // Instantiate a temperature sensor object
 DHT dht(26, DHT22);
-//Wifi information
-const char* ssid = "COSMOTE-128043";
-const char* password = "36bbhhekxdanxpc3";
+
+const char* ssid = "eduroam";
+const char* identity = "dxj6719@northwestern.edu";
+const char* password = "RomanoHili7264!";
 
 //define API Key for database in Firebase
 const char* API_KEY = "AIzaSyBtE__1HiSrImr4dnFx4wWFjOzGnez-SIM";
@@ -24,7 +25,7 @@ const char* DATABASE_URL = "https://iot-app-20b70-default-rtdb.firebaseio.com/";
 const int hour = 3600;
 //For the time keeping
 const char* ntpServer = "pool.ntp.org";
-const long gmtOffset_sec = 2 * hour;  // Offset in seconds for GMT
+const long gmtOffset_sec = -6 * hour;  // Offset in seconds for GMT
 const int daylightOffset_sec = 3600;  // Adjust for daylight saving time (if needed)
 
 float temp = 0;      //variable to store temp data
@@ -59,17 +60,17 @@ void setup() {
 
   // Connect to Wi-Fi
   Serial.print("Connecting to Wi-Fi");
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid, WPA2_AUTH_PEAP, identity, identity, password);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+    delay(1500);
+    Serial.print(F("."));
   }
 
-  Serial.println("\nConnected!");
+  Serial.println(F("\nConnected!"));
 
   // ...........Initialize NTP for timestamp.......
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  Serial.println("Waiting for NTP time sync...");
+  Serial.println(F("Waiting for NTP time sync..."));
 
   // Wait for time to be set with timeout
   unsigned long startAttemptTime = millis();
@@ -77,12 +78,11 @@ void setup() {
     Serial.print(".");
     delay(500);
     if (millis() - startAttemptTime > 10000) {
-      Serial.println("\nFailed to get time from NTP. Continuing anyway...");
+      Serial.println(F("\nFailed to get time from NTP. Continuing anyway..."));
       break;
     }
   }
   Serial.println("\nTime synchronized");
-  Serial.println("Time synchronization initialized.");
 
   //to setup the firebase database.
   config.api_key = API_KEY;
@@ -90,7 +90,7 @@ void setup() {
 
 
   if (Firebase.signUp(&config, &auth, "", "")) {
-    Serial.println("signUp OK");
+    Serial.println(F("signUp OK"));
     signupOK = true;
   } else {
     Serial.printf("%s\n", config.signer.signupError.message.c_str());
@@ -99,7 +99,7 @@ void setup() {
 
 
   Firebase.begin(&config, &auth);
-  Serial.print("Firebase Begin...");
+  Serial.print(F("Firebase Begin..."));
   Firebase.reconnectWiFi(true);
   // Wait for Firebase to initialize
   unsigned long firebaseStartTime = millis();
@@ -126,7 +126,7 @@ void loop() {
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
       delay(50);
-      Serial.print(".");
+      
     }
     Serial.println(" Reconnected!");
   }
@@ -135,7 +135,7 @@ void loop() {
   // Get the current time
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo)) {
-    Serial.println("Failed to obtain time");
+    Serial.println(F("Failed to obtain time"));
     return;
   }
 
