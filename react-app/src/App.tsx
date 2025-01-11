@@ -1,3 +1,4 @@
+import Body from "./Body";
 import Message from "./Message";
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
     >
       {" "}
       <Message></Message>{" "}
+      <br/>
+      <Body></Body>
     </div>
   );
 }
