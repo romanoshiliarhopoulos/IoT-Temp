@@ -7,14 +7,18 @@ function App() {
       style={{
         textAlign: "center",
         position: "absolute",
-        top: "15%",
+        top: "30%",
         left: "50%",
         transform: "translate(-50%, -50%)",
+        width: "85%",
+        display: "flex",
+        justifyContent: "center", // Horizontally center
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
       {" "}
-      <Message></Message>{" "}
-      <br/>
+      <Message></Message> <br />
       <Body></Body>
     </div>
   );
