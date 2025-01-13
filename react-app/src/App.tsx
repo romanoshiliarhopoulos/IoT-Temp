@@ -8,7 +8,7 @@ function App() {
       style={{
         textAlign: "center",
         position: "absolute",
-        top: "80%",
+        top: "75%",
         left: "50%",
         transform: "translate(-50%, -50%)",
         width: "85%",

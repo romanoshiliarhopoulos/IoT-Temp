@@ -1,4 +1,12 @@
 import React, { useEffect, useRef } from "react";
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 
 function Charts() {
   const temperatureChartRef = useRef(null);
@@ -13,21 +21,89 @@ function Charts() {
       type: "line",
       data: {
         labels: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
+          "00:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "03:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "06:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "09:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "12:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "15:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "18:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "21:00",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          "24:00",
+          " ",
         ],
         datasets: [
           {
             label: "Temperature (°C)",
-            data: [22, 24, 19, 23, 25, 21, 20],
+            data: [22, 24, 19, 23, 25, 21, 20, 30, 20, 30, 20, 20, 30, 40],
             borderColor: "#ff6384",
             backgroundColor: "rgba(255, 99, 132, 0.2)",
             tension: 0.4,
+            spanGaps: true,
           },
         ],
       },
@@ -44,6 +120,12 @@ function Charts() {
           x: {
             grid: {
               display: false,
+            },
+            ticks: {
+              autoSkip: false,
+              maxTicksLimit: 8, // Display a maximum of 8 labels
+              maxRotation: 45,
+              minRotation: 0,
             },
           },
           y: {
@@ -95,7 +177,7 @@ function Charts() {
             fontWeight: 600,
           }}
         >
-          Temperature:
+          Temperature:{" "}
         </span>{" "}
         <span
           style={{
@@ -188,6 +270,45 @@ function Charts() {
     </div>
   );
 }
+async function lastEntries(n: number) {
+  //function that fetches the last n entries from the firestore database.
+
+  //firebase config to fetch data from the firestore database
+  const firebaseConfig = {
+    apiKey: "AIzaSyD38K9ZpLZpFQbGruwO3EnoGSOrhmY45Ug",
+    authDomain: "iot-app-20b70.firebaseapp.com",
+    databaseURL: "https://iot-app-20b70-default-rtdb.firebaseio.com",
+    projectId: "iot-app-20b70",
+    storageBucket: "iot-app-20b70.firebasestorage.app",
+    messagingSenderId: "206130198957",
+    appId: "1:206130198957:web:a8d92d4c0c923d92004924",
+    measurementId: "G-HQCMWBSZK4",
+  };
+  // Firestore
+  const dbFirestore = getFirestore();
+  const readingsCollection = collection(dbFirestore, "readings");
+
+  // Query to get the last n documents
+  try {
+    const q = query(readingsCollection, orderBy("time", "desc"), limit(n));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No matching documents");
+      return [];
+    }
+    const documents: any[] = [];
+    querySnapshot.forEach((doc) => {
+      documents.push(doc.data());
+    });
+    //console.log("Last entries:", documents);
+    return documents;
+  } catch (error) {
+    console.error("Error getting last entries: ", error);
+    return [];
+  }
+}
+
 declare global {
   interface Window {
     Chart: typeof Chart;

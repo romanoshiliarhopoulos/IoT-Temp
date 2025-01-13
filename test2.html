@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Toggle Button</title>
+    <style>
+        .toggle-button {
+            position: relative;
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button[data-state="on"] {
+            background-color: #4caf50;
+        }
+
+        .toggle-button[data-state="off"] {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toggle" class="toggle-button" data-state="off">OFF</div>
+
+    <script>
+        const toggleButton = document.getElementById('toggle');
+
+        toggleButton.addEventListener('click', () => {
+            const currentState = toggleButton.getAttribute('data-state');
+            if (currentState === 'off') {
+                toggleButton.setAttribute('data-state', 'on');
+                toggleButton.textContent = 'ON';
+            } else {
+                toggleButton.setAttribute('data-state', 'off');
+                //toggleButton.textContent = 'OFF';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -73,36 +73,6 @@ function Message() {
           ● Live ({lastUpdate.substring(0, lastUpdate.length - 3)})
         </span>
       </p>
-
-      <table style={{ border: "1px solid black", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid black", padding: "8px" }}>
-              Measurement
-            </th>
-            <th style={{ border: "1px solid black", padding: "8px" }}>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style={{ border: "1px solid black", padding: "8px" }}>
-              Temperature
-            </td>
-            <td style={{ border: "1px solid black", padding: "8px" }}>
-              {data.temperature}°C
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid black", padding: "8px" }}>
-              Humidity
-            </td>
-            <td style={{ border: "1px solid black", padding: "8px" }}>
-              {data.humidity}%
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div style={{ marginTop: "10px", textAlign: "center" }}></div>
     </div>
   );
 }
