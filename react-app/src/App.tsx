@@ -25,7 +25,7 @@ function App() {
       <Message></Message> <br />
       <Body></Body>
       <br />
-      <span>Data charts</span>
+      <h2>Data charts</h2>
       <Charts></Charts>
     </div>
   );
