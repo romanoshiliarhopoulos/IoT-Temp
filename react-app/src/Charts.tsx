@@ -13,7 +13,7 @@ function Charts() {
           padding: "8px",
           background: "#496481",
           borderRadius: 10,
-          height: 150,
+          height: 400,
           width: "90%",
           color: "white",
           display: "flex",
@@ -49,7 +49,6 @@ function Charts() {
           Past 12h
         </span>
         <br />
-      
       </div>
       <br />
       <div
@@ -57,7 +56,7 @@ function Charts() {
           padding: "8px",
           background: "#496481",
           borderRadius: 10,
-          height: 150,
+          height: 400,
           width: "90%",
           color: "white",
           display: "flex",
