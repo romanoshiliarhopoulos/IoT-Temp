@@ -59,25 +59,36 @@ function Charts() {
       processedData.fill(0);
       let timedata = new Array(75);
       timedata.fill(" ");
-        let counter = 0;
-        //to populate the timedata array properly
-      for (let i = 0; i < timedata.length +1; i = i + 9) {
-        if (counter < 10) {
-          timedata[i] = "0" + String(counter) + ":00";
+      rawdata24 = rawdata24.reverse();
+
+      //make the counter equal to the 24 hour timstamp of the first reading...
+      let unixTimestamp = rawdata24[0].time.seconds;
+      const date = new Date(unixTimestamp * 1000); //create a new js date object multiplied by 1000 for miliseconds
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const time = `${hours}:${minutes}`;
+      console.log(time, unixTimestamp);
+      let counter = Number(time.substring(0, 2));
+      console.log(counter);
+
+      //to populate the timedata array properly
+      for (let i = 0; i < timedata.length + 1; i = i + 9) {
+        if (counter % 24 < 10) {
+          timedata[i] = "0" + String(counter % 24) + ":00";
         } else {
-          timedata[i] = String(counter) + ":00";
+          timedata[i] = String(counter % 24) + ":00";
         }
         counter = counter + 3;
       }
-      for (let i = 0; i < 72; i = i + 1) {
-        console.log(i);
+      let count = 0;
+      for (let i = 0; i < 144; i = i + 2) {
         let averageTemp = 0;
         let totalTemp = 0;
-        for (let j = i; j < i + length; j++) {
-          totalTemp = totalTemp + rawdata24[j].temperature;
-        }
-        averageTemp = totalTemp / length;
-        processedData[i] = averageTemp;
+        totalTemp =
+          totalTemp + rawdata24[i].temperature + rawdata24[i + 1].temperature;
+        averageTemp = totalTemp / 2;
+        processedData[count] = averageTemp;
+        count++;
       }
       console.log(processedData);
       drawChart(processedData, timedata);
