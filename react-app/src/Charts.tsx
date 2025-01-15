@@ -16,6 +16,44 @@ function Charts() {
     const ctx = temperatureChartRef.current?.getContext("2d");
     if (!ctx) return; // Prevent errors if ref is null
 
+    //get the temperature data first.
+
+    //find the first reading closest to midnight of the current day.
+    const getChicagoMidnightTimestamp = () => {
+      // Current date in UTC
+      const now = new Date();
+
+      // Create midnight in Chicago time (UTC-6)
+      const midnightChicago = new Date(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0,
+        0,
+        0,
+        0 // Midnight
+      );
+
+      // Offset by 6 hours to align with Chicago time (UTC-6)
+      midnightChicago.setUTCHours(midnightChicago.getUTCHours());
+
+      // Convert to Unix timestamp (seconds)
+      return Math.floor(midnightChicago.getTime() / 1000);
+    };
+
+    let chicagoMidnight = getChicagoMidnightTimestamp();
+
+    //find the first reading after midnight to base the rest of the readings.
+    //fetch the previous 144 readings (past 24hours)
+    const getPastDayReadings = async () => {
+      return await lastEntries(144); // Fetch the last 144 readings
+    };
+
+    (async () => {
+      const rawdata24 = await getPastDayReadings();
+      console.log("Past day readings:", rawdata24);
+    })();
+
     // Create the chart instance
     const chartInstance = new Chart(ctx, {
       type: "line",
