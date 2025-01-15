@@ -48,136 +48,91 @@ function Charts() {
     const getPastDayReadings = async () => {
       return await lastEntries(144); // Fetch the last 144 readings
     };
-
+    let rawdata24;
     (async () => {
-      const rawdata24 = await getPastDayReadings();
+      chicagoMidnight;
+      rawdata24 = await getPastDayReadings();
       console.log("Past day readings:", rawdata24);
+
+      let length = rawdata24.length / 72;
+      let processedData = new Array(72); //72 <readings styleName={}></readings>
+      processedData.fill(0);
+      let timedata = new Array(75);
+      timedata.fill(" ");
+        let counter = 0;
+        //to populate the timedata array properly
+      for (let i = 0; i < timedata.length +1; i = i + 9) {
+        if (counter < 10) {
+          timedata[i] = "0" + String(counter) + ":00";
+        } else {
+          timedata[i] = String(counter) + ":00";
+        }
+        counter = counter + 3;
+      }
+      for (let i = 0; i < 72; i = i + 1) {
+        console.log(i);
+        let averageTemp = 0;
+        let totalTemp = 0;
+        for (let j = i; j < i + length; j++) {
+          totalTemp = totalTemp + rawdata24[j].temperature;
+        }
+        averageTemp = totalTemp / length;
+        processedData[i] = averageTemp;
+      }
+      console.log(processedData);
+      drawChart(processedData, timedata);
     })();
 
-    // Create the chart instance
-    const chartInstance = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: [
-          "00:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "03:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "06:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "09:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "12:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "15:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "18:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "21:00",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          " ",
-          "24:00",
-          " ",
-        ],
-        datasets: [
-          {
-            label: "Temperature (°C)",
-            data: [22, 24, 19, 23, 25, 21, 20, 30, 20, 30, 20, 20, 30, 40],
-            borderColor: "#ff6384",
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            tension: 0.4,
-            spanGaps: true,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: "top",
-          },
+    function drawChart(tempdata: any[], timedata: any[]) {
+      // Create the chart instance
+      const chartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: timedata,
+          datasets: [
+            {
+              label: "Temperature (°C)",
+              data: tempdata,
+              borderColor: "#ff6384",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              tension: 0.4,
+              spanGaps: true,
+            },
+          ],
         },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            ticks: {
-              autoSkip: false,
-              maxTicksLimit: 8, // Display a maximum of 8 labels
-              maxRotation: 45,
-              minRotation: 0,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
             },
           },
-          y: {
-            grid: {
-              color: "#bdbebf",
+          scales: {
+            x: {
+              grid: {
+                display: false,
+              },
+              ticks: {
+                autoSkip: false,
+                maxTicksLimit: 8, // Display a maximum of 8 labels
+                maxRotation: 45,
+                minRotation: 0,
+              },
+            },
+            y: {
+              grid: {
+                color: "#bdbebf",
+              },
             },
           },
         },
-      },
-    });
-
+      });
+    }
     // Cleanup the chart instance on unmount
     return () => {
-      chartInstance.destroy();
+      //chartInstance.destroy();
     };
   }, []);
 
