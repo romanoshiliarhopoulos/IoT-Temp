@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import {
   getFirestore,
   collection,
@@ -9,39 +9,17 @@ import {
 } from "firebase/firestore";
 
 function Charts() {
-  const temperatureChartRef = useRef(null);
+    const temperatureChartRef = useRef(null);
+    const humidityChartRef = useRef(null);
 
   useEffect(() => {
     const Chart = window.Chart; // Ensure Chart.js is globally available
     const ctx = temperatureChartRef.current?.getContext("2d");
+    const ctx2 = humidityChartRef.current?.getContext("2d");
+
     if (!ctx) return; // Prevent errors if ref is null
 
     //get the temperature data first.
-
-    //find the first reading closest to midnight of the current day.
-    const getChicagoMidnightTimestamp = () => {
-      // Current date in UTC
-      const now = new Date();
-
-      // Create midnight in Chicago time (UTC-6)
-      const midnightChicago = new Date(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate(),
-        0,
-        0,
-        0,
-        0 // Midnight
-      );
-
-      // Offset by 6 hours to align with Chicago time (UTC-6)
-      midnightChicago.setUTCHours(midnightChicago.getUTCHours());
-
-      // Convert to Unix timestamp (seconds)
-      return Math.floor(midnightChicago.getTime() / 1000);
-    };
-
-    let chicagoMidnight = getChicagoMidnightTimestamp();
 
     //find the first reading after midnight to base the rest of the readings.
     //fetch the previous 144 readings (past 24hours)
@@ -50,14 +28,14 @@ function Charts() {
     };
     let rawdata24;
     (async () => {
-      chicagoMidnight;
       rawdata24 = await getPastDayReadings();
       console.log("Past day readings:", rawdata24);
 
-      let length = rawdata24.length / 72;
-      let processedData = new Array(72); //72 <readings styleName={}></readings>
-      processedData.fill(0);
-      let timedata = new Array(75);
+      let processedData = new Array(144);
+        processedData.fill(0);
+         let processedDataHum = new Array(144);
+         processedDataHum.fill(0);
+      let timedata = new Array(149);
       timedata.fill(" ");
       rawdata24 = rawdata24.reverse();
 
@@ -72,7 +50,7 @@ function Charts() {
       console.log(counter);
 
       //to populate the timedata array properly
-      for (let i = 0; i < timedata.length + 1; i = i + 9) {
+      for (let i = 0; i < timedata.length + 1; i = i + 18) {
         if (counter % 24 < 10) {
           timedata[i] = "0" + String(counter % 24) + ":00";
         } else {
@@ -80,21 +58,16 @@ function Charts() {
         }
         counter = counter + 3;
       }
-      let count = 0;
-      for (let i = 0; i < 144; i = i + 2) {
-        let averageTemp = 0;
-        let totalTemp = 0;
-        totalTemp =
-          totalTemp + rawdata24[i].temperature + rawdata24[i + 1].temperature;
-        averageTemp = totalTemp / 2;
-        processedData[count] = averageTemp;
-        count++;
+      for (let i = 0; i < 144; i = i + 1) {
+          processedData[i] = rawdata24[i].temperature;
+          processedDataHum[i] = rawdata24[i].humidity;
       }
       console.log(processedData);
-      drawChart(processedData, timedata);
+        drawChartTemp(processedData, timedata);
+        drawChartHum(processedDataHum, timedata);
     })();
 
-    function drawChart(tempdata: any[], timedata: any[]) {
+    function drawChartTemp(tempdata: any[], timedata: any[]) {
       // Create the chart instance
       const chartInstance = new Chart(ctx, {
         type: "line",
@@ -106,8 +79,8 @@ function Charts() {
               data: tempdata,
               borderColor: "#ff6384",
               backgroundColor: "rgba(255, 99, 132, 0.2)",
-              tension: 0.4,
               spanGaps: true,
+              pointRadius: 0, // This removes the data points
             },
           ],
         },
@@ -145,7 +118,55 @@ function Charts() {
     return () => {
       //chartInstance.destroy();
     };
+      function drawChartHum(humdata: any[], timedata: any[]) {
+        // Create the chart instance
+        const chartInstance2 = new Chart(ctx2, {
+          type: "line",
+          data: {
+            labels: timedata,
+            datasets: [
+              {
+                label: "Humidity (%)",
+                data: humdata,
+                borderColor: "#ff6384",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                spanGaps: true,
+                pointRadius: 0, // This removes the data points
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              x: {
+                grid: {
+                  display: false,
+                },
+                ticks: {
+                  autoSkip: false,
+                  maxTicksLimit: 8, // Display a maximum of 8 labels
+                  maxRotation: 45,
+                  minRotation: 0,
+                },
+              },
+              y: {
+                grid: {
+                  color: "#bdbebf",
+                },
+              },
+            },
+          },
+        });
+      }
   }, []);
+    
 
   return (
     <div
@@ -270,6 +291,19 @@ function Charts() {
             <option value="60">6 Months</option>
           </select>
         </span>
+        <canvas
+          ref={humidityChartRef}
+          style={{
+            width: "100%",
+            height: "100%",
+            marginTop: "40px",
+            marginBottom: "40px",
+            marginRight: "10px",
+            marginLeft: "10px",
+            borderRadius: "10px",
+            background: "#d0e0f7",
+          }}
+        ></canvas>{" "}
       </div>
     </div>
   );
