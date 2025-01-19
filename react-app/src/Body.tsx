@@ -168,7 +168,7 @@ async function lastEntries(n: number) {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      console.log("No matching documents");
+      console.log("No matching documents!");
       return [];
     }
     const documents: any[] = [];
