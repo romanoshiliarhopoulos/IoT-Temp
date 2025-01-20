@@ -3,7 +3,15 @@
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    background-color: #333;
+    background-color: #2e5177;
+    padding: 20px 10px;
+}
+.humidity-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    background-color: #2e5177;
     padding: 20px 10px;
 }
 
