@@ -6,22 +6,22 @@ function App() {
   return (
     <div
       style={{
-        textAlign: "center",
-        position: "absolute",
-        top: "75%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "85%",
+        minHeight: "100vh",
+        padding: "0px",
         display: "flex",
-        justifyContent: "center", // Horizontally center
-        alignItems: "center",
         flexDirection: "column",
+        alignItems: "center",
+        width: "80%",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        boxSizing: "border-box",
+        overflowX: "hidden",
+        position: "relative",
       }}
     >
       {" "}
       <br />
-      <br />
-      <br />
+  
       <Message></Message> <br />
       <Body></Body>
       <br />
