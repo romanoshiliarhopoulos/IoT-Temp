@@ -7,6 +7,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import './WeatherScroll.css';
 
 function Body() {
   // State to store the last entries data
@@ -96,7 +97,9 @@ function Body() {
           Past 12h
         </span>
         <br />
+        <br />
         {temp24[2]}
+        <div className="temperature-scroll" id="tempScroll"></div>
       </div>
       <br />
       <div
