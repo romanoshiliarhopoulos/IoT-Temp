@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://romanoshiliarhopoulos.github.io/IoTTemp",
+  "homepage": "https://romanoshiliarhopoulos.github.io/Tempy",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
