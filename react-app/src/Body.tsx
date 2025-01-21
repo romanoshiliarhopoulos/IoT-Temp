@@ -14,11 +14,8 @@ import "./WeatherScroll.css";
 let live: number[] = Array(2).fill(0);
 function Body() {
   // State to store the last entries data
-  const [data24, setData24] = useState<any[]>([]);
-  const [temp24, setTemp24] = useState<number[]>(Array(24).fill(0));
-  const [time12, setTime12] = useState<string[]>(Array(24).fill(" "));
-  const [humidity24, setHumidity24] = useState<number[]>(Array(24).fill(0));
-  const [loading, setLoading] = useState(true);
+  const [temp24] = useState<number[]>(Array(24).fill(0));
+  const [humidity24] = useState<number[]>(Array(24).fill(0));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,8 +68,6 @@ function Body() {
       console.log(temp24);
       console.log(humidity24);
 
-      //populate the time array
-      setLoading(false); // Data fetching is complete
     };
     fetchData();
   }, []);
@@ -199,18 +194,7 @@ function Body() {
 
 async function lastEntries(n: number) {
   //function that fetches the last n entries from the firestore database.
-
-  //firebase config to fetch data from the firestore database
-  const firebaseConfig = {
-    apiKey: "AIzaSyD38K9ZpLZpFQbGruwO3EnoGSOrhmY45Ug",
-    authDomain: "iot-app-20b70.firebaseapp.com",
-    databaseURL: "https://iot-app-20b70-default-rtdb.firebaseio.com",
-    projectId: "iot-app-20b70",
-    storageBucket: "iot-app-20b70.firebasestorage.app",
-    messagingSenderId: "206130198957",
-    appId: "1:206130198957:web:a8d92d4c0c923d92004924",
-    measurementId: "G-HQCMWBSZK4",
-  };
+  
   // Firestore
   const dbFirestore = getFirestore();
   const readingsCollection = collection(dbFirestore, "readings");
@@ -269,6 +253,10 @@ async function getLiveReadings() {
 
 function updateTemperatures(time: any[], temp: any) {
   const container = document.getElementById("tempScroll");
+  if (!container) {
+    console.error("Temperature scroll container not found");
+    return;
+  }
   container.innerHTML = ""; // Clear existing content
 
   for (let i = 0; i < temp.length; i++) {
@@ -285,10 +273,13 @@ function updateTemperatures(time: any[], temp: any) {
 }
 function updateHumidities(time: any[], hum: any) {
   const container = document.getElementById("humScroll");
-  container.innerHTML = ""; // Clear existing content
 
   for (let i = 0; i < hum.length; i++) {
     const tempItem = document.createElement("div");
+    if (!container) {
+      console.error("Temperature scroll container not found");
+      return;
+    }
     tempItem.className = "temp-item";
 
     tempItem.innerHTML = `

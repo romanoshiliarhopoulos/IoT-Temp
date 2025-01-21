@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import {
   getFirestore,
   collection,
@@ -7,15 +7,15 @@ import {
   limit,
   getDocs,
 } from "firebase/firestore";
+import { Chart } from "chart.js";
 
 function Charts() {
-    const temperatureChartRef = useRef(null);
-    const humidityChartRef = useRef(null);
+    const temperatureChartRef = useRef<HTMLCanvasElement>(null);
+    const humidityChartRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const Chart = window.Chart; // Ensure Chart.js is globally available
     const ctx = temperatureChartRef.current?.getContext("2d");
-    const ctx2 = humidityChartRef.current?.getContext("2d");
 
     if (!ctx) return; // Prevent errors if ref is null
 
@@ -67,9 +67,24 @@ function Charts() {
         drawChartHum(processedDataHum, timedata);
     })();
 
-    function drawChartTemp(tempdata: any[], timedata: any[]) {
-      // Create the chart instance
-      const chartInstance = new Chart(ctx, {
+    function drawChartTemp(tempdata: number[], timedata: string[]) {
+      // Assuming you already have a canvas element with an id
+      const canvas = document.getElementById(
+        "myChart"
+      ) as HTMLCanvasElement | null;
+
+      if (!canvas) {
+        console.error("Canvas element not found");
+        return; // Exit the function if the canvas element is not found
+      }
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        console.error("Failed to get canvas rendering context");
+        return; // Exit the function if the context is not available
+      }
+
+      new Chart(ctx, {
         type: "line",
         data: {
           labels: timedata,
@@ -80,7 +95,7 @@ function Charts() {
               borderColor: "#ff6384",
               backgroundColor: "rgba(255, 99, 132, 0.2)",
               spanGaps: true,
-              pointRadius: 0, // This removes the data points
+              pointRadius: 0,
             },
           ],
         },
@@ -94,79 +109,90 @@ function Charts() {
             },
           },
           scales: {
-            x: {
-              grid: {
-                display: false,
-              },
-              ticks: {
-                autoSkip: false,
-                maxTicksLimit: 8, // Display a maximum of 8 labels
-                maxRotation: 45,
-                minRotation: 0,
-              },
-            },
-            y: {
-              grid: {
-                color: "#bdbebf",
-              },
-            },
-          },
-        },
-      });
-    }
-    // Cleanup the chart instance on unmount
-    return () => {
-      //chartInstance.destroy();
-    };
-      function drawChartHum(humdata: any[], timedata: any[]) {
-        // Create the chart instance
-        const chartInstance2 = new Chart(ctx2, {
-          type: "line",
-          data: {
-            labels: timedata,
-            datasets: [
+            xAxes: [
               {
-                label: "Humidity (%)",
-                data: humdata,
-                borderColor: "#ff6384",
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                spanGaps: true,
-                pointRadius: 0, // This removes the data points
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: true,
-                position: "top",
-              },
-            },
-            scales: {
-              x: {
-                grid: {
-                  display: false,
-                },
+                gridLines: { display: false },
                 ticks: {
                   autoSkip: false,
-                  maxTicksLimit: 8, // Display a maximum of 8 labels
+                  maxTicksLimit: 8,
                   maxRotation: 45,
                   minRotation: 0,
                 },
               },
-              y: {
-                grid: {
-                  color: "#bdbebf",
-                },
+            ],
+            yAxes: [
+              {
+                gridLines: { color: "#bdbebf" },
               },
+            ],
+          },
+        },
+      });
+    }
+
+
+    function drawChartHum(humdata: number[], timedata: string[]) {
+      // Assuming you have another canvas element for humidity with an id
+  const canvas = document.getElementById("myChartHum") as HTMLCanvasElement | null;
+
+  if (!canvas) {
+    console.error("Canvas element for humidity not found");
+    return; // Exit the function if the canvas element is not found
+  }
+
+  const ctx2 = canvas.getContext("2d");
+  if (!ctx2) {
+    console.error("Failed to get canvas rendering context for humidity");
+    return; // Exit the function if the context is not available
+  }
+      new Chart(ctx2, {
+        type: "line",
+        data: {
+          labels: timedata,
+          datasets: [
+            {
+              label: "Humidity (%)",
+              data: humdata,
+              borderColor: "#36a2eb",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              spanGaps: true,
+              pointRadius: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
             },
           },
-        });
-      }
+          scales: {
+            xAxes: [
+              {
+                gridLines: { display: false },
+                ticks: {
+                  autoSkip: false,
+                  maxTicksLimit: 8,
+                  maxRotation: 45,
+                  minRotation: 0,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: { color: "#bdbebf" },
+              },
+            ],
+          },
+        },
+      });
+    }
+
+    // Cleanup logic can be added if necessary
   }, []);
-    
 
   return (
     <div
@@ -229,6 +255,7 @@ function Charts() {
         <br />
         <canvas
           ref={temperatureChartRef}
+          id="myChart"
           style={{
             width: "100%",
             height: "100%",
@@ -293,6 +320,7 @@ function Charts() {
         </span>
         <canvas
           ref={humidityChartRef}
+          id="myChartHum"
           style={{
             width: "100%",
             height: "100%",
@@ -322,6 +350,7 @@ async function lastEntries(n: number) {
     appId: "1:206130198957:web:a8d92d4c0c923d92004924",
     measurementId: "G-HQCMWBSZK4",
   };
+  firebaseConfig;
   // Firestore
   const dbFirestore = getFirestore();
   const readingsCollection = collection(dbFirestore, "readings");
