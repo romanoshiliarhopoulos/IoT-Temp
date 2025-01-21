@@ -1,10 +1,8 @@
 {
-  "homepage": "https://romanoshiliarhopoulos.github.io/Tempy",
+"homepage": "https://romanoshiliarhopoulos.github.io/Tempy",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
   },
   "name": "chart.js",
   "private": true,
@@ -32,4 +30,6 @@
   "main": "eslint.config.js",
   "author": "",
   "license": "ISC"
+  
 }
+
