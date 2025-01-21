@@ -70,7 +70,7 @@ function Message() {
 
         <br />
         <span style={{ color: "#7eed9a" }}>
-          ● Live ({lastUpdate.substring(0, lastUpdate.length - 3)})
+          ● LIVE ({lastUpdate.substring(0, lastUpdate.length - 3)})
         </span>
       </p>
     </div>
