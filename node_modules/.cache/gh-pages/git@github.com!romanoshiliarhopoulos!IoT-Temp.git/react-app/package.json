@@ -13,8 +13,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
+    "deploy": "gh-pages -d dist --no-history"
+    },
   "dependencies": {
     "firebase": "^11.1.0",
     "react": "^18.3.1",
