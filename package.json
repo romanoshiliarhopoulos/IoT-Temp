@@ -1,11 +1,25 @@
 {
   
   "dependencies": {
-    "@types/chart.js": "^2.9.41",
-    "firebase": "^11.1.0",
-    "vite": "^6.0.6"
+  
+    
+  "@types/chart.js": "^2.9.41",
+  
+    
+  "firebase": "^11.1.0"
+  
   },
+  
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+  
+    
+  "@vitejs/plugin-react": "^4.3.4",
+  
+    
+  "gh-pages": "^6.3.0",
+  
+    
+  "vite": "^6.0.10"
+  
   }
 }
