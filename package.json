@@ -1,4 +1,5 @@
 {
+  
   "dependencies": {
     "@types/chart.js": "^2.9.41",
     "firebase": "^11.1.0",
